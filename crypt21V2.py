@@ -1,5 +1,12 @@
 from random import shuffle
 
+def dict_to_list(dictionary):
+	dictlist=[]
+	for key, value in dictionary.items():
+	    #temp = [key,value]
+	    dictlist.append(key)
+	return dictlist;
+
 def removekey(d, key):
     r = dict(d)
     del r[key]
@@ -48,7 +55,7 @@ def read_data(data_type):
 	return keys_sorted, letters_in_text;
 
 
-def substitution_of_letters(letters_in_text, FrequentlyUsedLetters ,type_of_proccessing):
+def substitution_of_letters(letters_in_text, keys_sorted, FrequentlyUsedLetters ,type_of_proccessing):
 	change_letters = {}
 	#CHANGING LETTERS WITH FREQUENTLY APPEARING ONES
 	i=len(FrequentlyUsedLetters)-1
@@ -85,20 +92,38 @@ while True:
 		keys_sorted, letters_in_text = read_data('')
 
 		#LETTERS EXCHANGE
-		substitution_of_letters(letters_in_text, FrequentlyUsedLetters, type_of_proccessing)
+		substitution_of_letters(letters_in_text, keys_sorted, FrequentlyUsedLetters, type_of_proccessing)
 		print('files were decrypted')
 		break
 
 	elif type_of_proccessing == 'encrypt':
-		key = list(ABC)
-		encrypt(key)	#ENCRYPTING
 		keys_sorted, letters_in_text  = read_data('decrypt')
-		substitution_of_letters(letters_in_text, key, type_of_proccessing)
+		key = dict_to_list(keys_sorted)
+		encrypt(key)	#ENCRYPTING
+		substitution_of_letters(letters_in_text, keys_sorted, key, type_of_proccessing)
+		keys_sorted = dict_to_list(keys_sorted)
+		keys_sorted.reverse()
 		file = open('key.txt','w')
-		for i in range(len(ABC)):
-			file.write(str(ABC[i])+str(' = ')+str(key[i])+str('\n'))
+		for i in range(len(key)):
+			file.write(str(keys_sorted[i])+str(' = ')+str(key[i])+str('\n'))
 		file.close()
 		print('files were encrypted')
+		break
+
+	elif type_of_proccessing == 'read':
+		real_letter, crypt_letter=[], []
+		with open(str('key.txt'), 'r') as data:
+			data_new = data.readlines()
+			for i in range(len(data_new)):
+				elements = data_new[i].strip().split(' = ')
+				real_letter.append(elements[0])
+				crypt_letter.append(elements[1])
+		keys_sorted, letters_in_text  = read_data('encrypt')
+		crypt_letter.reverse()
+		crypt_letter = dict.fromkeys(crypt_letter, "")
+		print(crypt_letter, 'crypt_letter')
+		print(real_letter, 'real_letter')
+		substitution_of_letters(letters_in_text, crypt_letter, real_letter, type_of_proccessing)
 		break
 
 	else:
