@@ -41,16 +41,8 @@ for i in range(30):
 		pass
 for i in range(len(temp)):
 	letters += temp[i]
-# open_file = str('11_crypt.txt')
-# with open(open_file, 'r') as data:
-# 	letters = data.read()
 print(len(letters), ' quantity of letters')
-# count = {}
-# for s in letters:
-#   if s in count:
-#     count[s] += 1
-#   else:
-#     count[s] = 1
+
 count = count_concidences(letters)
 
 for key, value in count.items():
@@ -65,7 +57,6 @@ i=len(FrequentlyUsedLetters)-1
 for key, value in keys_sorted.items():
 	change_letters[key] = FrequentlyUsedLetters[i]
 	i-=1
-#change_letters = {value:key for key, value in change_letters.items()}
 for k in range(len(temp)):
 	letters_list = list(temp[k])
 	for i in range(len(letters_list)):
@@ -80,58 +71,3 @@ for k in range(len(temp)):
 	file = open(file_name,'w')
 	file.write(text_with_changed_letters[k])
 	file.close()
-
-with open(str('word_rus.txt'), 'r') as data:
-	data_new = data.readlines()
-	for i in data_new:
-		words.append(i.replace('\n',''))
-
-# for k in range(len(temp)):
-# 	raw_words = text_with_changed_letters[k].split(' ')
-# 	for i in raw_words:
-# 		for m in words:
-# 			if len(m) == len(i) and :
-
-
-
-#print(words)
-
-exit()
-'''
-#The second way
-for i in range(len(old_letters)):
-	if ABC.index(old_letters[i]) - ABC.index(new_letters[i]) < 0:
-		delta.append(ABC.index(new_letters[i]) - ABC.index(old_letters[i]))
-	else:
-		delta.append(ABC.index(old_letters[i]) - ABC.index(new_letters[i]))
-count = count_concidences(delta)
-count = sort_keys()
-#print(count)
-
-
-# for key, value in count.items():
-# 	possible_shifts.append(key+3)
-# possible_shifts.append(21)
-# print(possible_shifts)
-
-for i in range(len(ABC)):
-	possible_shifts.append(i)
-for ps in possible_shifts:
-	letters_list = list(letters)
-	change_letters={}
-	for i in range(len(ABC)):
-		shifted_letter = ABC.index(ABC[i])+int(ps)
-		if shifted_letter >= 33:
-			shifted_letter -= 33
-		change_letters[ABC[i]] = ABC[shifted_letter]
-	print(change_letters, ps)
-	for i in range(len(letters_list)):
-		if letters_list[i] in ABC:
-			letters_list[i] = change_letters[letters_list[i]]
-		else:
-			pass
-	file_name = str('modified_crypt21_shift_')+str(ps)+str('.txt')
-	file = open(file_name,'w')
-	file.write("".join(letters_list))
-	file.close()
-'''
